@@ -1,4 +1,4 @@
-#Gazettegram
+# Gazettegram
 
 Source for the [Maldives Gazette](http://www.gazette.gov.mv/) scraper,
 and telegram bot powering the channel [@mvgazette_tech](https://t.me/mvgazette_tech)
