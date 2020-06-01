@@ -2,7 +2,7 @@
 PERSIST_DB = "persist.sqlite3"
 
 # URL items
-GAZETTE_BASE_URL = "http://www.gazette.gov.mv/"
+GAZETTE_BASE_URL = "https://www.gazette.gov.mv/"
 IULAAN_SEARCH_URL = "iulaan/search/"
 
 # Value Defaults
