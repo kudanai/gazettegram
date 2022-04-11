@@ -10,21 +10,18 @@ def iulaan_search(page=1,
                   iulaan_type=config.IULAAN_TYPES['all'],
                   category=config.JOB_CATEGORIES['all'],
                   open_only=1,
-                  start_date=None,
-                  description=None):
+                  start_date="",
+                  description=""):
 
     return_data = []
-    url = "{}{}page/{}".format(config.GAZETTE_BASE_URL, config.IULAAN_SEARCH_URL, page)
-    data = {
-        "job-category": category,
-        "iulaan-type": iulaan_type,
-        "open-only": open_only,
-        "description": description,
-        "start-date": start_date
-    }
+    url = "{}{}?type={}&job-category={}&&open-only={}&start-date={}&q={}".format(
+        config.GAZETTE_BASE_URL, config.IULAAN_SEARCH_URL, iulaan_type, category, open_only, start_date, description)
 
-    response = requests.post(url, data=data)
-    if response.status_code==requests.codes.ok:
+    if (page != 1):
+        url += "&page=".format(page)
+
+    response = requests.get(url)
+    if response.status_code == requests.codes.ok:
 
         soup = bs(response.content, "html.parser")
 

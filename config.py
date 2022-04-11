@@ -3,7 +3,7 @@ PERSIST_DB = "persist.sqlite3"
 
 # URL items
 GAZETTE_BASE_URL = "https://www.gazette.gov.mv/"
-IULAAN_SEARCH_URL = "iulaan/search/"
+IULAAN_SEARCH_URL = "iulaan/"
 
 # Value Defaults
 JOB_CATEGORIES = {
