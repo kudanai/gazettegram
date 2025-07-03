@@ -1,80 +1,46 @@
-# GazetteBot2
+# Gazettegram
 
-GazetteBot2 is a Python-based web scraper designed to automatically fetch, process, and store announcements from the Maldivian Government Gazette website (`gazette.gov.mv`). It uses `httpx` for asynchronous HTTP requests, `BeautifulSoup` for HTML parsing, and `SQLite` for local data storage.
+Gazettegram is a Python scraper for the Maldivian Government Gazette (`gazette.gov.mv`). It automatically fetches, processes, and stores announcements in a local SQLite database, with an option to send Telegram notifications for relevant new posts.
 
-## Features
-
-- **Asynchronous Scraping**: Utilizes `asyncio` and `httpx` for efficient, non-blocking web scraping.
-- **Configurable**: Easily configure which gazette types to scrape, set concurrency limits, and define request delays.
-- **Data Persistence**: Stores scraped data in a local SQLite database, avoiding duplicate entries for already fetched announcements.
-- **Modular Design**: The project is structured into distinct modules for scraping, data management, and type definitions.
-- **Extensible**: The database schema and data models can be easily extended to accommodate new data fields.
-
-## Installation and Setup
+## Setup and Usage
 
 1.  **Clone the repository:**
     ```bash
     git clone <repository-url>
-    cd GazetteBot2
+    cd Gazettegram
     ```
 
-2.  **Create a virtual environment and install dependencies:**
+2.  **Install dependencies using uv:**
     This project uses `uv` for package management.
     ```bash
-    python -m venv .venv
-    source .venv/bin/activate
-    pip install uv
-    uv pip install -r requirements.txt
+    uv sync
     ```
 
-## Usage
+3.  **Configure Environment Variables:**
+    Create a `.env` file in the project root and add the following variables for Telegram bot integration.
+    ```env
+    # Telegram Bot Config
+    TG_ADMIN_CHATID=<your_admin_chat_id>
+    TG_BOT_TOKEN=<your_telegram_bot_token>
+    TG_CHAT_ID=<your_target_telegram_channel_id>
+    ```
 
-### Configuration
+4.  **Review `config.py`:**
+    This file contains the main settings for the scraper. Adjust as needed:
+    *   `TARGET_GAZETTE_TYPE`: List of gazette categories to scrape.
+    *   `MAX_CONCURRENT_REQUESTS`: Number of parallel scraping workers.
+    *   `REQUEST_DELAY`: Delay between requests.
+    *   `MAX_INDEX_PAGES`: Optional limit on pages to scrape per category.
+    *   `KEYWORD_MAP`: Scoring system for classifying announcements.
 
-The `config.py` file contains all the runtime settings for the scraper. You can modify this file to change the scraper's behavior.
-
-- `TARGET_GAZETTE_TYPE`: A list of `GazetteType` enums to be scraped.
-- `BASE_URL`: The base URL of the gazette website.
-- `DATABASE_PATH`: The path to the SQLite database file.
-- `MAX_CONCURRENT_REQUESTS`: The number of parallel requests to the server.
-- `REQUEST_DELAY`: The delay in seconds between batches of requests.
-- `MAX_INDEX_PAGES`: An optional limit on the number of index pages to fetch for each gazette type.
-
-### Running the Scraper
-
-To start the scraping process, run the `sync.py` script:
-
-```bash
-python -m sync
-```
-
-The script will fetch the specified gazette types, parse the announcements, and store them in the database.
-
-### Manual Scraping
-
-You can also fetch and display a single announcement by running the `scraper.py` script directly with an `iulaan_id`:
-
-```bash
-python -m api.scraper <iulaan_id>
-```
-
-## Project Structure
-
-```
-.
-├── api/
-│   ├── gazette_types.py  # Defines the data models and enums
-│   └── scraper.py        # Core scraping and parsing logic
-├── data/
-│   └── gazettedb.py      # Database management (SQLite)
-├── config.py             # Configuration settings
-├── sync.py               # Main script to run the scraper
-├── pyproject.toml        # Project metadata and dependencies
-└── README.md             # This file
-```
-
-## Dependencies
-
-- `beautifulsoup4`: For parsing HTML.
-- `httpx`: For making asynchronous HTTP requests.
-- `python-dotenv`: For managing environment variables (if needed).
+5.  **Run the Scraper:**
+    To start the scraping process, run the `sync.py` script:
+    ```bash
+    python sync.py
+    ```
+    The script will fetch new announcements based on your configuration and save them to the `gazette.db` SQLite file.
+6.  **[optional] Send Telegram Notifications:**  
+    To send Telegram notifications for new announcements, run the `post_telegram.py` script:
+    ```bash
+    python post_telegram.py
+    ```
