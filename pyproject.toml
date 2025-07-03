@@ -1,0 +1,17 @@
+[project]
+name = "gazettebot2"
+version = "0.1.0"
+description = "Automated Services for Scraping and Processing MV Gazette"
+requires-python = ">=3.13"
+dependencies = [
+    "beautifulsoup4>=4.13.4",
+    "dotenv>=0.9.9",
+    "httpx>=0.28.1",
+    "scikit-learn>=1.7.0",
+]
+
+[dependency-groups]
+dev = [
+    "jupyter>=1.1.1",
+    "pandas>=2.3.0",
+]
