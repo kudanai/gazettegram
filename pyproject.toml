@@ -7,11 +7,11 @@ dependencies = [
     "beautifulsoup4>=4.13.4",
     "dotenv>=0.9.9",
     "httpx>=0.28.1",
-    "scikit-learn>=1.7.0",
 ]
 
 [dependency-groups]
 dev = [
     "jupyter>=1.1.1",
     "pandas>=2.3.0",
+    "scikit-learn>=1.7.0",
 ]
